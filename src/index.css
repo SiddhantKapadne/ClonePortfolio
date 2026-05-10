@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  html,
+  body,
+  #root {
+    @apply min-h-screen;
+  }
+
+  body {
+    @apply m-0 bg-canvas font-sans text-ink antialiased;
+  }
+
+  a {
+    @apply text-inherit no-underline;
+  }
+}
+
+@layer components {
+  .motion-page-enter {
+    animation: motion-page-enter 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--motion-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  .motion-page-stagger {
+    animation: motion-page-enter 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--motion-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  /** Image / video loading skeleton: soft base + light shimmer sweep */
+  .media-skeleton-micro {
+    @apply overflow-hidden bg-[#E0EAF0];
+  }
+
+  .media-skeleton-micro::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 0%,
+      transparent 38%,
+      rgba(236, 248, 255, 0.42) 50%,
+      transparent 62%,
+      transparent 100%
+    );
+    transform: translateX(-100%);
+    animation: about-skeleton-sweep 1.85s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    will-change: transform;
+  }
+}
+
+@keyframes motion-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes about-skeleton-sweep {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-page-enter,
+  .motion-page-stagger {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .media-skeleton-micro::after {
+    animation: none !important;
+  }
+}
+
